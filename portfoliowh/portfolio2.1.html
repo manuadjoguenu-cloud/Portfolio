@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AKTE – Adjoguenu Kossi Thiery-Emmanuel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --blue: #1a7fc1;
+            --blue-dark: #1260a0;
+            --orange: #d9512c;
+            --orange-dark: #b8401f;
+            --yellow: #f0c040;
+            --white: #ffffff;
+            --light: #f5f6fa;
+            --dark: #111827;
+            --gray: #6b7280;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.7;
+        }
+
+        /* HEADER */
+        header {
+            background-color: var(--blue);
+            padding: 14px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        header h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--white);
+            letter-spacing: 2px;
+        }
+
+        /* HAMBURGER */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 26px;
+            height: 2px;
+            background: var(--white);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .hamburger.open span:nth-child(2) { opacity: 0; }
+        .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+        /* NAV */
+        nav {
+            background-color: var(--white);
+            padding: 14px 24px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            background-color: var(--blue);
+            color: var(--yellow);
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-family: 'Syne', sans-serif;
+            font-weight: 600;
+            font-size: 0.85rem;
+            letter-spacing: 0.3px;
+            display: inline-block;
+            transition: background-color 0.2s ease, transform 0.15s ease;
+        }
+
+        nav ul li a:hover { background-color: var(--blue-dark); transform: translateY(-2px); }
+
+        nav ul li:last-child a { background-color: var(--orange); color: var(--white); }
+        nav ul li:last-child a:hover { background-color: var(--orange-dark); }
+
+        /* MOBILE NAV */
+        @media (max-width: 640px) {
+            .hamburger { display: flex; }
+            nav { padding: 0; }
+
+            nav ul {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.35s ease, padding 0.3s ease;
+            }
+
+            nav ul.open {
+                max-height: 500px;
+                padding: 12px 16px 16px;
+                gap: 8px;
+            }
+
+            nav ul li a { display: block; text-align: center; padding: 10px 16px; }
+        }
+
+        /* HERO */
+        .hero {
+            background: linear-gradient(135deg, var(--orange) 0%, var(--orange-dark) 100%);
+            padding: 70px 24px 50px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -60px; right: -60px;
+            width: 280px; height: 280px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 50%;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -80px; left: -40px;
+            width: 220px; height: 220px;
+            background: rgba(255,255,255,0.04);
+            border-radius: 50%;
+        }
+
+        .hero h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(1.4rem, 5vw, 2.2rem);
+            font-weight: 800;
+            color: var(--white);
+            margin-bottom: 18px;
+            line-height: 1.3;
+            position: relative;
+        }
+
+        .hero .tagline {
+            font-size: clamp(0.88rem, 2.5vw, 1rem);
+            color: rgba(255,255,255,0.85);
+            max-width: 620px;
+            margin: 0 auto 32px;
+            font-weight: 300;
+            position: relative;
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            position: relative;
+        }
+
+        .btn {
+            text-decoration: none;
+            padding: 12px 26px;
+            border-radius: 8px;
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: 0.93rem;
+            display: inline-block;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .btn:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
+        .btn.primary { background-color: var(--yellow); color: var(--dark); }
+        .btn.secondary { background-color: transparent; color: var(--white); border: 2px solid rgba(255,255,255,0.7); }
+
+        /* MAIN */
+        main { max-width: 960px; margin: 0 auto; padding: 50px 20px 60px; }
+
+        .section-title {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(1.3rem, 4vw, 1.7rem);
+            font-weight: 800;
+            color: var(--blue);
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 3px solid var(--orange);
+            display: inline-block;
+        }
+
+        /* SERVICES */
+        .services-section { margin-bottom: 60px; }
+        .services-section > p { color: var(--gray); margin-bottom: 28px; max-width: 700px; line-height: 1.8; }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 20px;
+            list-style: none;
+        }
+
+        .services-grid li {
+            background: var(--white);
+            border-left: 4px solid var(--blue);
+            border-radius: 10px;
+            padding: 22px 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .services-grid li::after {
+            content: '';
+            position: absolute;
+            bottom: 0; right: 0;
+            width: 60px; height: 60px;
+            background: rgba(26,127,193,0.04);
+            border-radius: 50% 0 0 0;
+        }
+
+        .services-grid li:hover { transform: translateY(-5px); box-shadow: 0 10px 24px rgba(0,0,0,0.12); }
+
+        .service-icon {
+            font-size: 1.8rem;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .services-grid li h4 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+
+        .services-grid li p {
+            font-size: 0.82rem;
+            color: var(--gray);
+            line-height: 1.65;
+        }
+
+        /* PROJECTS */
+        .projects-section { margin-bottom: 60px; }
+        .projects-section > p { color: var(--gray); margin: 12px 0 28px; max-width: 700px; line-height: 1.8; }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 22px;
+            list-style: none;
+        }
+
+        .project-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 26px 22px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            border-top: 4px solid var(--orange);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card:hover { transform: translateY(-6px); box-shadow: 0 12px 28px rgba(0,0,0,0.12); }
+
+        .project-emoji {
+            font-size: 2rem;
+            margin-bottom: 14px;
+            display: block;
+        }
+
+        .project-card h4 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+
+        .project-card p {
+            font-size: 0.82rem;
+            color: var(--gray);
+            line-height: 1.65;
+            flex: 1;
+            margin-bottom: 16px;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .project-tag {
+            background: rgba(26,127,193,0.1);
+            color: var(--blue);
+            font-size: 0.72rem;
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 20px;
+            letter-spacing: 0.3px;
+        }
+
+        .project-tag.orange {
+            background: rgba(217,81,44,0.1);
+            color: var(--orange);
+        }
+
+        /* ABOUT */
+        .about-section { margin-bottom: 60px; }
+
+        .about-section > p {
+            color: var(--gray);
+            margin: 12px 0 26px;
+            max-width: 700px;
+            line-height: 1.8;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 16px;
+            list-style: none;
+            margin-bottom: 28px;
+        }
+
+        .skills-grid li {
+            background: var(--white);
+            border-radius: 10px;
+            padding: 18px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border-top: 3px solid var(--orange);
+            transition: transform 0.15s ease;
+        }
+
+        .skills-grid li:hover { transform: translateY(-4px); }
+
+        .skill-icon {
+            font-size: 1.4rem;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .skills-grid li h4 {
+            font-family: 'Syne', sans-serif;
+            font-size: 0.92rem;
+            font-weight: 700;
+            color: var(--blue);
+            margin-bottom: 6px;
+        }
+
+        .skills-grid li p { font-size: 0.82rem; color: var(--gray); line-height: 1.6; }
+
+        .about-links { display: flex; gap: 12px; flex-wrap: wrap; }
+
+        .about-links a {
+            text-decoration: none;
+            padding: 10px 22px;
+            border-radius: 7px;
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: 0.88rem;
+            transition: transform 0.15s ease;
+        }
+
+        .about-links a:hover { transform: translateY(-2px); }
+        .about-links a:first-child { background-color: var(--blue); color: var(--white); }
+        .about-links a:last-child { background-color: var(--orange); color: var(--white); }
+
+        /* CONTACT */
+        .contact-section { margin-bottom: 20px; }
+
+        .contact-section > p {
+            color: var(--gray);
+            margin: 12px 0 28px;
+            max-width: 600px;
+            line-height: 1.8;
+        }
+
+        .contact-cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+            margin-bottom: 32px;
+        }
+
+        @media (max-width: 560px) {
+            .contact-cards { grid-template-columns: 1fr; }
+        }
+
+        .contact-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 20px 18px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+            text-decoration: none;
+            color: inherit;
+            min-width: 0;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+
+        .contact-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 1.4rem;
+        }
+
+        .contact-icon.email { background: rgba(26,127,193,0.12); }
+        .contact-icon.phone { background: rgba(217,81,44,0.12); }
+
+        .contact-card-info {
+            min-width: 0;
+            overflow: hidden;
+        }
+
+        .contact-card-info span {
+            display: block;
+            font-size: 0.72rem;
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            margin-bottom: 3px;
+        }
+
+        .contact-card-info strong {
+            font-size: 0.88rem;
+            color: var(--dark);
+            font-weight: 500;
+            word-break: break-all;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: block;
+        }
+
+        .contact-cta {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .contact-cta a {
+            text-decoration: none;
+            padding: 12px 26px;
+            border-radius: 8px;
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+            flex: 1 1 auto;
+            text-align: center;
+            min-width: 140px;
+        }
+
+        .contact-cta a:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.15); }
+        .contact-cta a.cta-email { background-color: var(--blue); color: var(--white); }
+        .contact-cta a.cta-phone { background-color: var(--orange); color: var(--white); }
+
+        /* FOOTER */
+        footer {
+            background-color: var(--dark);
+            color: rgba(255,255,255,0.5);
+            text-align: center;
+            padding: 36px 20px 28px;
+            font-size: 0.82rem;
+        }
+
+        footer strong { color: rgba(255,255,255,0.8); font-family: 'Syne', sans-serif; }
+
+        .footer-socials {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            padding: 9px 16px;
+            border-radius: 8px;
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: 0.8rem;
+            transition: transform 0.15s ease, opacity 0.15s ease;
+            color: var(--white);
+        }
+
+        .social-link:hover { transform: translateY(-3px); opacity: 0.85; }
+
+        .social-link svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+            flex-shrink: 0;
+        }
+
+        .social-link.linkedin { background-color: #0A66C2; }
+        .social-link.instagram { background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045); }
+        .social-link.whatsapp { background-color: #25D366; }
+        .social-link.twitter { background-color: #000000; }
+
+        .footer-divider {
+            width: 40px;
+            height: 2px;
+            background: rgba(255,255,255,0.15);
+            margin: 0 auto 16px;
+            border-radius: 2px;
+        }
+
+        @media (max-width: 480px) {
+            .footer-socials { gap: 10px; }
+            .social-link { padding: 8px 12px; font-size: 0.75rem; }
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 480px) {
+            .hero { padding: 50px 18px 40px; }
+            main { padding: 36px 16px 48px; }
+            .services-grid { grid-template-columns: 1fr; }
+            .skills-grid { grid-template-columns: 1fr; }
+            .projects-grid { grid-template-columns: 1fr; }
+            .contact-cards { grid-template-columns: 1fr; }
+            .btn { width: 100%; text-align: center; }
+            .hero-btns { flex-direction: column; }
+            .contact-cta { flex-direction: column; }
+            .contact-cta a { text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h3>AKTE</h3>
+        <button class="hamburger" id="menuBtn" aria-label="Toggle navigation">
+            <span></span><span></span><span></span>
+        </button>
+    </header>
+
+    <nav id="mainNav">
+        <ul id="navList">
+            <li><a href="#services">Services</a></li>
+            <li><a href="#about">About Me</a></li>
+            <li><a href="#about">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Testimonials</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="mailto:manu.adjoguenu@gmail.com">Let's talk</a></li>
+        </ul>
+    </nav>
+
+    <section class="hero">
+        <h1>Hi, I'm ADJOGUENU Kossi Thiery-Emmanuel 👋</h1>
+        <p class="tagline">I am a full-stack application and website developer and network engineer. I specialize in designing functional and beautiful websites.</p>
+        <div class="hero-btns">
+            <a href="#about" class="btn primary">View My Work</a>
+            <a href="#" class="btn secondary">Download CV</a>
+        </div>
+    </section>
+
+    <main>
+
+        <article class="services-section" id="services">
+            <h2 class="section-title">My Services</h2>
+            <p>Je conçois et développe des solutions digitales sur mesure — des sites vitrines aux applications complexes, en passant par l'infrastructure réseau. Chaque projet est abordé avec rigueur, créativité et le souci du détail.</p>
+            <ul class="services-grid">
+                <li>
+                    <span class="service-icon">🌐</span>
+                    <h4>Web Development</h4>
+                    <p>Création de sites web modernes, rapides et responsives. Du site vitrine à la plateforme e-commerce, je développe des interfaces élégantes qui convertissent les visiteurs en clients.</p>
+                </li>
+                <li>
+                    <span class="service-icon">🎨</span>
+                    <h4>UI/UX Design</h4>
+                    <p>Conception d'interfaces intuitives centrées sur l'utilisateur. Wireframes, prototypes interactifs et design systems pour des expériences mémorables et cohérentes.</p>
+                </li>
+                <li>
+                    <span class="service-icon">🔧</span>
+                    <h4>Network Engineering</h4>
+                    <p>Conception, configuration et maintenance d'infrastructures réseau. Administration de serveurs, sécurisation des accès et optimisation des performances réseau pour entreprises.</p>
+                </li>
+                <li>
+                    <span class="service-icon">📱</span>
+                    <h4>Application Development</h4>
+                    <p>Développement d'applications web et mobiles full-stack robustes. APIs RESTful, authentification sécurisée, bases de données optimisées pour des systèmes scalables.</p>
+                </li>
+                <li>
+                    <span class="service-icon">🛠️</span>
+                    <h4>Technical Support</h4>
+                    <p>Assistance technique, débogage et maintenance de systèmes informatiques. Diagnostic de pannes, mises à jour et optimisation des performances de vos outils numériques.</p>
+                </li>
+                <li>
+                    <span class="service-icon">📡</span>
+                    <h4>Communication & Systèmes</h4>
+                    <p>Mise en place de solutions de communication interne et externe : messageries d'entreprise, systèmes VoIP, intégrations d'outils collaboratifs et plateformes de communication unifiées.</p>
+                </li>
+                <li>
+                    <span class="service-icon">🎓</span>
+                    <h4>Formation & Enseignement</h4>
+                    <p>Cours de programmation et d'informatique pour débutants et intermédiaires. Élaboration de curricula pédagogiques adaptés, exercices pratiques et accompagnement personnalisé.</p>
+                </li>
+                <li>
+                    <span class="service-icon">⚙️</span>
+                    <h4>Automatisation</h4>
+                    <p>Développement de scripts et d'outils pour automatiser vos processus métier. Gain de temps, réduction des erreurs humaines et intégration de workflows intelligents.</p>
+                </li>
+            </ul>
+        </article>
+
+        <article class="about-section" id="about">
+            <h2 class="section-title">About Me</h2>
+            <p>Je crée des expériences digitales qui allient technologie innovante et design élégant. Avec une expertise en développement frontend et backend, en ingénierie réseau et en pédagogie, je livre des solutions visuellement soignées, hautement fonctionnelles et pensées pour l'utilisateur.</p>
+            <ul class="skills-grid">
+                <li>
+                    <span class="skill-icon">⚛️</span>
+                    <h4>Frontend Development</h4>
+                    <p>Vue.js, React, JavaScript, TypeScript, HTML5, CSS3, Tailwind CSS</p>
+                </li>
+                <li>
+                    <span class="skill-icon">🖧</span>
+                    <h4>Backend Development</h4>
+                    <p>Node.js, Express, Python, Django, Flask, PostgreSQL, MongoDB, REST API, GraphQL</p>
+                </li>
+                <li>
+                    <span class="skill-icon">🎨</span>
+                    <h4>Design</h4>
+                    <p>UI/UX Design, Figma, Adobe XD, Prototyping, Design Systems, Responsive Design</p>
+                </li>
+                <li>
+                    <span class="skill-icon">🔧</span>
+                    <h4>DevOps & Outils</h4>
+                    <p>Git, GitHub, Docker, AWS, Linux, Nginx, CI/CD, Webpack, VSCode</p>
+                </li>
+                <li>
+                    <span class="skill-icon">📡</span>
+                    <h4>Réseau & Systèmes</h4>
+                    <p>TCP/IP, Cisco, VLANs, VPN, Firewall, Administration Linux/Windows Server, Active Directory</p>
+                </li>
+                <li>
+                    <span class="skill-icon">🗄️</span>
+                    <h4>Bases de données</h4>
+                    <p>PostgreSQL, MySQL, MongoDB, SQLite, Firebase, modélisation de données, requêtes optimisées</p>
+                </li>
+                <li>
+                    <span class="skill-icon">📲</span>
+                    <h4>Mobile & API</h4>
+                    <p>React Native, API REST, Postman, intégration de services tiers, OAuth2, JWT</p>
+                </li>
+                <li>
+                    <span class="skill-icon">🎓</span>
+                    <h4>Pédagogie</h4>
+                    <p>Conception de cours, rédaction de supports, encadrement d'apprenants, pédagogie active et par projets</p>
+                </li>
+            </ul>
+            <div class="about-links">
+                <a href="#">View My Portfolio</a>
+                <a href="#contact">Contact Me</a>
+            </div>
+        </article>
+
+        <article class="projects-section" id="projects">
+            <h2 class="section-title">Projects</h2>
+            <p>Une sélection de projets qui reflètent ma passion pour la technologie, l'enseignement et la communication — du développement logiciel à la création de plateformes éducatives et de systèmes de communication modernes.</p>
+            <ul class="projects-grid">
+                <li class="project-card">
+                    <span class="project-emoji">💻</span>
+                    <h4>Cours de Programmation Web</h4>
+                    <p>Élaboration d'un curriculum complet de programmation web pour débutants : HTML, CSS, JavaScript, jusqu'aux frameworks modernes. Supports de cours, exercices pratiques et projets guidés pour une montée en compétences progressive.</p>
+                    <div class="project-tags">
+                        <span class="project-tag">HTML/CSS</span>
+                        <span class="project-tag">JavaScript</span>
+                        <span class="project-tag orange">Pédagogie</span>
+                    </div>
+                </li>
+                <li class="project-card">
+                    <span class="project-emoji">🐍</span>
+                    <h4>Formation Python & Algorithmique</h4>
+                    <p>Programme de formation en Python destiné aux étudiants et professionnels souhaitant maîtriser l'algorithmique, la manipulation de données et l'automatisation. Inclut des exercices progressifs et des mini-projets réels.</p>
+                    <div class="project-tags">
+                        <span class="project-tag">Python</span>
+                        <span class="project-tag">Algorithmique</span>
+                        <span class="project-tag orange">Formation</span>
+                    </div>
+                </li>
+                <li class="project-card">
+                    <span class="project-emoji">📡</span>
+                    <h4>Plateforme de Communication Unifiée</h4>
+                    <p>Conception et déploiement d'un système de communication interne pour entreprise : messagerie instantanée, visioconférence intégrée, partage de fichiers et gestion de notifications. Architecture microservices avec Node.js et WebSockets.</p>
+                    <div class="project-tags">
+                        <span class="project-tag">Node.js</span>
+                        <span class="project-tag">WebSockets</span>
+                        <span class="project-tag orange">Communication</span>
+                    </div>
+                </li>
+                <li class="project-card">
+                    <span class="project-emoji">🗞️</span>
+                    <h4>Système de Newsletter & Diffusion</h4>
+                    <p>Création d'une plateforme de gestion de newsletters et de diffusion de communications : éditeur de contenu, segmentation d'audience, automatisation d'envois et tableau de bord analytique pour suivre les performances.</p>
+                    <div class="project-tags">
+                        <span class="project-tag">React</span>
+                        <span class="project-tag">API REST</span>
+                        <span class="project-tag orange">Communication</span>
+                    </div>
+                </li>
+                <li class="project-card">
+                    <span class="project-emoji">🌐</span>
+                    <h4>Portail Éducatif Interactif</h4>
+                    <p>Développement d'une plateforme e-learning avec gestion des cours, suivi de progression, quiz interactifs et espace étudiant personnalisé. Interface responsive pensée pour une utilisation sur mobile en zone à faible connexion.</p>
+                    <div class="project-tags">
+                        <span class="project-tag">Vue.js</span>
+                        <span class="project-tag">Django</span>
+                        <span class="project-tag orange">E-learning</span>
+                    </div>
+                </li>
+                <li class="project-card">
+                    <span class="project-emoji">🏢</span>
+                    <h4>Infrastructure Réseau d'Entreprise</h4>
+                    <p>Conception et déploiement de l'infrastructure réseau complète d'une PME : câblage structuré, configuration de routeurs et switchs, mise en place d'un VPN sécurisé, pare-feu et monitoring du trafic en temps réel.</p>
+                    <div class="project-tags">
+                        <span class="project-tag">Cisco</span>
+                        <span class="project-tag">VPN</span>
+                        <span class="project-tag orange">Réseau</span>
+                    </div>
+                </li>
+            </ul>
+        </article>
+
+        <article class="contact-section" id="contact">
+            <h2 class="section-title">Contact</h2>
+            <p>Have a project in mind or want to work together? Reach out — I'd love to hear from you.</p>
+
+            <div class="contact-cards">
+                <a class="contact-card" href="mailto:manu.adjoguenu@gmail.com">
+                    <div class="contact-icon email">📧</div>
+                    <div class="contact-card-info">
+                        <span>Email</span>
+                        <strong>manu.adjoguenu@gmail.com</strong>
+                    </div>
+                </a>
+                <a class="contact-card" href="tel:+22892036639">
+                    <div class="contact-icon phone">📞</div>
+                    <div class="contact-card-info">
+                        <span>Phone</span>
+                        <strong>92 03 66 39</strong>
+                    </div>
+                </a>
+            </div>
+
+            <div class="contact-cta">
+                <a class="cta-email" href="mailto:manu.adjoguenu@gmail.com">Send an Email</a>
+                <a class="cta-phone" href="tel:+22892036639">Call Me</a>
+            </div>
+        </article>
+
+    </main>
+
+    <footer>
+        <div class="footer-socials">
+            <a class="social-link linkedin" href="https://linkedin.com/in/" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                LinkedIn
+            </a>
+            <a class="social-link instagram" href="https://instagram.com/" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+                Instagram
+            </a>
+            <a class="social-link whatsapp" href="https://wa.me/22892036639" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+                WhatsApp
+            </a>
+            <a class="social-link twitter" href="https://x.com/" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.261 5.632L18.245 2.25h-.001zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                X (Twitter)
+            </a>
+        </div>
+        <div class="footer-divider"></div>
+        <p>© 2026 <strong>AKTE</strong> – Adjoguenu Kossi Thiery-Emmanuel. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const btn = document.getElementById('menuBtn');
+        const list = document.getElementById('navList');
+
+        btn.addEventListener('click', () => {
+            btn.classList.toggle('open');
+            list.classList.toggle('open');
+        });
+
+        list.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                btn.classList.remove('open');
+                list.classList.remove('open');
+            });
+        });
+    </script>
+
+</body>
+</html>
