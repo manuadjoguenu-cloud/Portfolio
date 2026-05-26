@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AKTE – Adjoguenu Kossi Thiery-Emmanuel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --blue: #1a7fc1;
+            --blue-dark: #1260a0;
+            --orange: #d9512c;
+            --orange-dark: #b8401f;
+            --yellow: #f0c040;
+            --white: #ffffff;
+            --light: #f5f6fa;
+            --dark: #111827;
+            --gray: #6b7280;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.7;
+        }
+
+        /* HEADER */
+        header {
+            background-color: var(--blue);
+            padding: 14px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        header h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--white);
+            letter-spacing: 2px;
+        }
+
+        /* HAMBURGER */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 26px;
+            height: 2px;
+            background: var(--white);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .hamburger.open span:nth-child(2) { opacity: 0; }
+        .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+        /* NAV */
+        nav {
+            background-color: var(--white);
+            padding: 14px 24px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            background-color: var(--blue);
+            color: var(--yellow);
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-family: 'Syne', sans-serif;
+            font-weight: 600;
+            font-size: 0.85rem;
+            letter-spacing: 0.3px;
+            display: inline-block;
+            transition: background-color 0.2s ease, transform 0.15s ease;
+        }
+
+        nav ul li a:hover { background-color: var(--blue-dark); transform: translateY(-2px); }
+
+        nav ul li:last-child a { background-color: var(--orange); color: var(--white); }
+        nav ul li:last-child a:hover { background-color: var(--orange-dark); }
+
+        /* MOBILE NAV */
+        @media (max-width: 640px) {
+            .hamburger { display: flex; }
+            nav { padding: 0; }
+
+            nav ul {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.35s ease, padding 0.3s ease;
+            }
+
+            nav ul.open {
+                max-height: 500px;
+                padding: 12px 16px 16px;
+                gap: 8px;
+            }
+
+            nav ul li a { display: block; text-align: center; padding: 10px 16px; }
+        }
+
+        /* HERO */
+        .hero {
+            background: linear-gradient(135deg, var(--orange) 0%, var(--orange-dark) 100%);
+            padding: 70px 24px 50px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -60px; right: -60px;
+            width: 280px; height: 280px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 50%;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -80px; left: -40px;
+            width: 220px; height: 220px;
+            background: rgba(255,255,255,0.04);
+            border-radius: 50%;
+        }
+
+        .hero h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(1.4rem, 5vw, 2.2rem);
+            font-weight: 800;
+            color: var(--white);
+            margin-bottom: 18px;
+            line-height: 1.3;
+            position: relative;
+        }
+
+        .hero .tagline {
+            font-size: clamp(0.88rem, 2.5vw, 1rem);
+            color: rgba(255,255,255,0.85);
+            max-width: 620px;
+            margin: 0 auto 32px;
+            font-weight: 300;
+            position: relative;
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            position: relative;
+        }
+
+        .btn {
+            text-decoration: none;
+            padding: 12px 26px;
+            border-radius: 8px;
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: 0.93rem;
+            display: inline-block;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .btn:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
+        .btn.primary { background-color: var(--yellow); color: var(--dark); }
+        .btn.secondary { background-color: transparent; color: var(--white); border: 2px solid rgba(255,255,255,0.7); }
+
+        /* MAIN */
+        main { max-width: 960px; margin: 0 auto; padding: 50px 20px 60px; }
+
+        .section-title {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(1.3rem, 4vw, 1.7rem);
+            font-weight: 800;
+            color: var(--blue);
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 3px solid var(--orange);
+            display: inline-block;
+        }
+
+        /* SERVICES */
+        .services-section { margin-bottom: 60px; }
+        .services-section > p { color: var(--gray); margin-bottom: 20px; }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 14px;
+            list-style: none;
+        }
+
+        .services-grid li {
+            background: var(--white);
+            border-left: 4px solid var(--blue);
+            border-radius: 8px;
+            padding: 16px 14px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            transition: transform 0.15s ease;
+        }
+
+        .services-grid li:hover { transform: translateY(-4px); }
+
+        .services-grid li h4 {
+            font-family: 'Syne', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        /* ABOUT */
+        .about-section { margin-bottom: 60px; }
+
+        .about-section > p {
+            color: var(--gray);
+            margin: 12px 0 26px;
+            max-width: 700px;
+            line-height: 1.8;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 16px;
+            list-style: none;
+            margin-bottom: 28px;
+        }
+
+        .skills-grid li {
+            background: var(--white);
+            border-radius: 10px;
+            padding: 18px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border-top: 3px solid var(--orange);
+        }
+
+        .skills-grid li h4 {
+            font-family: 'Syne', sans-serif;
+            font-size: 0.92rem;
+            font-weight: 700;
+            color: var(--blue);
+            margin-bottom: 6px;
+        }
+
+        .skills-grid li p { font-size: 0.82rem; color: var(--gray); line-height: 1.6; }
+
+        .about-links { display: flex; gap: 12px; flex-wrap: wrap; }
+
+        .about-links a {
+            text-decoration: none;
+            padding: 10px 22px;
+            border-radius: 7px;
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: 0.88rem;
+            transition: transform 0.15s ease;
+        }
+
+        .about-links a:hover { transform: translateY(-2px); }
+        .about-links a:first-child { background-color: var(--blue); color: var(--white); }
+        .about-links a:last-child { background-color: var(--orange); color: var(--white); }
+
+        /* CONTACT */
+        .contact-section { margin-bottom: 20px; }
+
+        .contact-section > p {
+            color: var(--gray);
+            margin: 12px 0 28px;
+            max-width: 600px;
+            line-height: 1.8;
+        }
+
+        .contact-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 18px;
+            margin-bottom: 32px;
+        }
+
+        .contact-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 22px 18px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+
+        .contact-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 1.4rem;
+        }
+
+        .contact-icon.email { background: rgba(26,127,193,0.12); }
+        .contact-icon.phone { background: rgba(217,81,44,0.12); }
+
+        .contact-card-info span {
+            display: block;
+            font-size: 0.73rem;
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            margin-bottom: 3px;
+        }
+
+        .contact-card-info strong {
+            font-size: 0.93rem;
+            color: var(--dark);
+            font-weight: 500;
+            word-break: break-all;
+        }
+
+        .contact-cta { display: flex; gap: 12px; flex-wrap: wrap; }
+
+        .contact-cta a {
+            text-decoration: none;
+            padding: 12px 26px;
+            border-radius: 8px;
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .contact-cta a:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.15); }
+        .contact-cta a.cta-email { background-color: var(--blue); color: var(--white); }
+        .contact-cta a.cta-phone { background-color: var(--orange); color: var(--white); }
+
+        /* FOOTER */
+        footer {
+            background-color: var(--dark);
+            color: rgba(255,255,255,0.5);
+            text-align: center;
+            padding: 22px 20px;
+            font-size: 0.82rem;
+        }
+
+        footer strong { color: rgba(255,255,255,0.8); font-family: 'Syne', sans-serif; }
+
+        /* RESPONSIVE */
+        @media (max-width: 480px) {
+            .hero { padding: 50px 18px 40px; }
+            main { padding: 36px 16px 48px; }
+            .services-grid { grid-template-columns: 1fr 1fr; }
+            .skills-grid { grid-template-columns: 1fr; }
+            .contact-cards { grid-template-columns: 1fr; }
+            .btn { width: 100%; text-align: center; }
+            .hero-btns { flex-direction: column; }
+            .contact-cta { flex-direction: column; }
+            .contact-cta a { text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h3>AKTE</h3>
+        <button class="hamburger" id="menuBtn" aria-label="Toggle navigation">
+            <span></span><span></span><span></span>
+        </button>
+    </header>
+
+    <nav id="mainNav">
+        <ul id="navList">
+            <li><a href="#services">Services</a></li>
+            <li><a href="#about">About Me</a></li>
+            <li><a href="#about">Skills</a></li>
+            <li><a href="#contact">Projects</a></li>
+            <li><a href="#contact">Testimonials</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="mailto:manu.adjoguenu@gmail.com">Let's talk</a></li>
+        </ul>
+    </nav>
+
+    <section class="hero">
+        <h1>Hi, I'm ADJOGUENU Kossi Thiery-Emmanuel 👋</h1>
+        <p class="tagline">I am a full-stack application and website developer and network engineer. I specialize in designing functional and beautiful websites.</p>
+        <div class="hero-btns">
+            <a href="#about" class="btn primary">View My Work</a>
+            <a href="#" class="btn secondary">Download CV</a>
+        </div>
+    </section>
+
+    <main>
+
+        <article class="services-section" id="services">
+            <h2 class="section-title">My Services</h2>
+            <p>I offer a range of services to help bring your ideas to life:</p>
+            <ul class="services-grid">
+                <li><h4>Web Development</h4></li>
+                <li><h4>UI/UX Design</h4></li>
+                <li><h4>Network Engineering</h4></li>
+                <li><h4>Application Development</h4></li>
+                <li><h4>Technical Support</h4></li>
+            </ul>
+        </article>
+
+        <article class="about-section" id="about">
+            <h2 class="section-title">About Me</h2>
+            <p>I create digital experiences that combine innovative technology with elegant design. With expertise in both frontend and backend development, I deliver solutions that are visually stunning, highly functional, and user-friendly.</p>
+            <ul class="skills-grid">
+                <li>
+                    <h4>Frontend Development</h4>
+                    <p>Vue.js, React, JavaScript, TypeScript</p>
+                </li>
+                <li>
+                    <h4>Backend Development</h4>
+                    <p>Node.js, Express, Python, Django, Flask, PostgreSQL, MongoDB, REST API</p>
+                </li>
+                <li>
+                    <h4>Design</h4>
+                    <p>UI/UX Design, Figma, Prototyping</p>
+                </li>
+                <li>
+                    <h4>Tools</h4>
+                    <p>Git, Docker, AWS, Webpack, VSCode</p>
+                </li>
+            </ul>
+            <div class="about-links">
+                <a href="#">View My Portfolio</a>
+                <a href="#contact">Contact Me</a>
+            </div>
+        </article>
+
+        <article class="contact-section" id="contact">
+            <h2 class="section-title">Contact</h2>
+            <p>Have a project in mind or want to work together? Reach out — I'd love to hear from you.</p>
+
+            <div class="contact-cards">
+                <a class="contact-card" href="mailto:manu.adjoguenu@gmail.com">
+                    <div class="contact-icon email">📧</div>
+                    <div class="contact-card-info">
+                        <span>Email</span>
+                        <strong>manu.adjoguenu@gmail.com</strong>
+                    </div>
+                </a>
+                <a class="contact-card" href="tel:+22892036639">
+                    <div class="contact-icon phone">📞</div>
+                    <div class="contact-card-info">
+                        <span>Phone</span>
+                        <strong>92 03 66 39</strong>
+                    </div>
+                </a>
+            </div>
+
+            <div class="contact-cta">
+                <a class="cta-email" href="mailto:manu.adjoguenu@gmail.com">Send an Email</a>
+                <a class="cta-phone" href="tel:+22892036639">Call Me</a>
+            </div>
+        </article>
+
+    </main>
+
+    <footer>
+        <p>© 2026 <strong>AKTE</strong> – Adjoguenu Kossi Thiery-Emmanuel. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const btn = document.getElementById('menuBtn');
+        const list = document.getElementById('navList');
+
+        btn.addEventListener('click', () => {
+            btn.classList.toggle('open');
+            list.classList.toggle('open');
+        });
+
+        list.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                btn.classList.remove('open');
+                list.classList.remove('open');
+            });
+        });
+    </script>
+
+</body>
+</html>
